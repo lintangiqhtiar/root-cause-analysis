@@ -1,0 +1,15 @@
+streamlit
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+nltk
+gensim
+pyLDAvis
+wordcloud
+torch
+transformers
+huggingface-hub
+altair
+requests
