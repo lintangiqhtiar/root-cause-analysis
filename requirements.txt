@@ -13,3 +13,4 @@ transformers
 huggingface-hub
 altair
 requests
+gdown==5.2.0
