@@ -11,8 +11,8 @@ def load_model():
     zip_path = "models/gpt2-20test.zip"
     
     # File ID dari Google Drive
-    file_id = "1nwYSGqTLr-H1nHGP54WgQ99db2dVkreU"  # Ganti dengan file ID kamu
-    gdrive_url = f"https://drive.google.com/uc?id={file_id}"
+    #file_id = "1nwYSGqTLr-H1nHGP54WgQ99db2dVkreU"  # Ganti dengan file ID kamu
+    gdrive_url = "https://drive.google.com/drive/folders/1nwYSGqTLr-H1nHGP54WgQ99db2dVkreU"
 
     # Cek apakah model sudah ada
     if not os.path.exists(model_dir):
