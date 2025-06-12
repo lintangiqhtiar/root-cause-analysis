@@ -7,8 +7,8 @@ import streamlit as st
 
 @st.cache_resource
 def load_model():
-    model_dir = "models/gpt2-20test"
-    zip_path = "models/gpt2-20test.zip"
+    model_dir = "models/gpt2rev-aug20test"
+    zip_path = "models/gpt2rev-aug20test.zip"
     
     # File ID dari Google Drive
     #file_id = "1nwYSGqTLr-H1nHGP54WgQ99db2dVkreU"  # Ganti dengan file ID kamu
