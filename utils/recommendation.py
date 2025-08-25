@@ -1,39 +1,25 @@
-import os
 import torch
-import gdown
-import zipfile
+from transformers import AutoTokenizer
+import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
-import streamlit as st
-
-@st.cache_resource
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+# Load model dan tokenizer
 def load_model():
-    model_dir = "models/gpt2rev-aug20test"
-    zip_path = "models/gpt2rev-aug20test.zip"
-    
-    # File ID dari Google Drive
-    #file_id = "1nwYSGqTLr-H1nHGP54WgQ99db2dVkreU"  # Ganti dengan file ID kamu
-    gdrive_url = "https://drive.google.com/drive/folders/1nwYSGqTLr-H1nHGP54WgQ99db2dVkreU"
-
-    # Cek apakah model sudah ada
-    if not os.path.exists(model_dir):
-        os.makedirs("models", exist_ok=True)
-        if not os.path.exists(zip_path):
-            with st.spinner("Mengunduh model dari Google Drive..."):
-                gdown.download(gdrive_url, zip_path, quiet=False)
-
-        with st.spinner("Mengekstrak model..."):
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                zip_ref.extractall("models")
-
-    tokenizer = AutoTokenizer.from_pretrained(model_dir)
-    model = AutoModelForCausalLM.from_pretrained(model_dir)
-
+    # model_path = "models/gpt2-indonesian-finetuned"  # Path ke model yang sudah kamu fine-tune
+    # model_path = "models/gpt2rev-aug20test"
+    # tokenizer = AutoTokenizer.from_pretrained(model_path)
+    # model = AutoModelForCausalLM.from_pretrained(model_path)
+    tokenizer = AutoTokenizer.from_pretrained("lintangiqhtiar/my-finetuned-model")
+    model = AutoModelForCausalLM.from_pretrained("lintangiqhtiar/my-finetuned-model")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
-
     return model, tokenizer, device
 
-# Inisialisasi model
+# from huggingface_hub import hf_hub_download
+# model_path = hf_hub_download(repo_id="username/my-finetuned-model", filename="pytorch_model.bin")
+
+
+# Inisialisasi model saat modul ini di-import
 model, tokenizer, device = load_model()
 
 def generate_recommendation(text):
@@ -56,9 +42,11 @@ def generate_recommendation(text):
         )
         decoded = tokenizer.decode(output[0], skip_special_tokens=True)
 
+    # Ambil bagian setelah kata "Rekomendasi:"
     if "Rekomendasi:" in decoded:
         final_output = decoded.split("Rekomendasi:")[-1].strip()
     else:
         final_output = decoded.strip()
     
     return f"Rekomendasi: {final_output}"
+
